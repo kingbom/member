@@ -12,7 +12,7 @@ export class AppService {
   }
   
   async saveCat(){
-    return this.memberModel.create({
+    return await this.memberModel.create({
       firstname: "jaruwit",
       lastname: "suriyo",
       email: "kingbom_300432@hotmail.com",
