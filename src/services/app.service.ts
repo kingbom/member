@@ -4,15 +4,23 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class AppService {
-  constructor(@InjectModel('Cat') private catModel: Model<any>){
+  constructor(@InjectModel('Member') private memberModel: Model<any>){
   }
   
   async getCats() {
-    return await this.catModel.find();
+    return await this.memberModel.find();
   }
   
   async saveCat(){
-    const model = new this.catModel({name : 'Test', age : Math.random()});
-    return await model.save();
+    return this.memberModel.create({
+      firstname: "jaruwit",
+      lastname: "suriyo",
+      email: "kingbom_300432@hotmail.com",
+      password: "abc1234",
+      position: "developer",
+      image: "xxxx.jpg",
+      role: 1
+    });
+  
   }
 }
