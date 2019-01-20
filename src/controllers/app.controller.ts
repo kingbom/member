@@ -6,18 +6,12 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): object {
-    return {
-      status : 200,
-      message : 'successfuly method GET'
-   }
+  getHello(): any {
+    return this.appService.getCats();
   }
 
   @Post()
-  postMessage(): object{
-    return {
-        status : 200,
-        message : 'successfuly method POST'
-    }
+  postMessage(): any{
+    return this.appService.saveCat();
   }
 }
