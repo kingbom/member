@@ -2,7 +2,6 @@ import { Controller, Post, Body, BadRequestException, Get } from "@nestjs/common
 import { RegisterModel } from "src/models/register.model";
 import { ValidationPipe } from "src/pipes/validation.pipe";
 import { AccountService } from "src/services/account.service";
-import { async } from "rxjs/internal/scheduler/async";
 
 @Controller('api/account')
 export class AccountController {

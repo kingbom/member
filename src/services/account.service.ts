@@ -2,10 +2,12 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IRegister, IAccount, RoleAccount } from 'src/interfaces/app.interface';
+import { IMemberDocument } from 'src/interfaces/member.interface';
+import { generate } from  'password-hash';
 
 @Injectable()
 export class AccountService {
-  constructor(@InjectModel('Member') private memberModel: Model<any>){
+  constructor(@InjectModel('Member') private memberModel: Model<IMemberDocument>){
   }
   
   /**
@@ -17,10 +19,13 @@ export class AccountService {
     await this.onValidateEmailDuplicate(reqBody);
     delete reqBody.cpassword;
     const member : IAccount = reqBody;
+    member.password = generate(member.password);
     member.image ='';
     member.position ='';
     member.role = RoleAccount.Member;
-    return await this.memberModel.create(member);
+    const memberItem = await this.memberModel.create(member);
+    memberItem.password = '';
+    return memberItem;
   }
 
   async onValidateEmailDuplicate(reqBody: IRegister){

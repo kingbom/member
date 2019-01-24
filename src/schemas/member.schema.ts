@@ -1,6 +1,5 @@
 import { Schema } from 'mongoose';
 export const MemberSchema = new Schema({
-    id: Number,
     firstname: String,
     lastname: String,
     email: String,
@@ -14,4 +13,4 @@ export const MemberSchema = new Schema({
     updated: {
         type: Date, default: Date.now
     }
-});
+}, {toObject : { virtuals: true } });   
