@@ -1,9 +1,9 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IRegister, IAccount, RoleAccount } from 'src/interfaces/app.interface';
+import { IRegister, IAccount, RoleAccount, ILogin } from 'src/interfaces/app.interface';
 import { IMemberDocument } from 'src/interfaces/member.interface';
-import { generate } from  'password-hash';
+import { generate, verify } from 'password-hash';
 
 @Injectable()
 export class AccountService {
@@ -39,5 +39,12 @@ export class AccountService {
    */
   async onGetMembers(){
       return await this.memberModel.find();
+  }
+
+  async onLogin(req: ILogin){
+    const member = await this.memberModel.findOne({email: req.email});
+    if(!member) throw new BadRequestException('User not found'); 
+    if(!verify(req.password, member.password)) throw new BadRequestException('Email or Password incorrect');
+    return {accessToken: ''};
   }
 }
