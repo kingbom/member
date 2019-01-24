@@ -4,10 +4,14 @@ import { Model } from 'mongoose';
 import { IRegister, IAccount, RoleAccount, ILogin } from 'src/interfaces/app.interface';
 import { IMemberDocument } from 'src/interfaces/member.interface';
 import { generate, verify } from 'password-hash';
+import { DbAuthenService } from './db-authen.service';
 
 @Injectable()
 export class AccountService {
-  constructor(@InjectModel('Member') private memberModel: Model<IMemberDocument>){
+  constructor(
+    private dbAuthenService: DbAuthenService,
+    @InjectModel('Member') private memberModel: Model<IMemberDocument>
+    ){
   }
   
   /**
@@ -41,10 +45,15 @@ export class AccountService {
       return await this.memberModel.find();
   }
 
+  /**
+   * Login
+   * @param req 
+   * return accessToken
+   */ 
   async onLogin(req: ILogin){
     const member = await this.memberModel.findOne({email: req.email});
     if(!member) throw new BadRequestException('User not found'); 
     if(!verify(req.password, member.password)) throw new BadRequestException('Email or Password incorrect');
-    return {accessToken: ''};
+    return {accessToken: await this.dbAuthenService.generateAccessToken(member)};
   }
 }
