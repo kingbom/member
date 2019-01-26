@@ -4,7 +4,7 @@ import { Request } from "express-serve-static-core";
 import { IAccount } from "src/interfaces/app.interface";
 
 @Controller('api/member')
-@UseGuards(AuthGuard('bearer'))
+@UseGuards(AuthGuard('jwt'))
 export class MemberController {
 
     @Get('data')

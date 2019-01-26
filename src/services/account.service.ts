@@ -10,7 +10,7 @@ import { DbAuthenService } from './db-authen.service';
 @Injectable()
 export class AccountService {
   constructor(
-    private authenService: DbAuthenService,
+    private authenService: JwtAuthenService,
     @InjectModel('Member') private memberModel: Model<IMemberDocument>
     ){
   }
