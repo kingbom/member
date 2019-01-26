@@ -5,11 +5,12 @@ import { IRegister, IAccount, RoleAccount, ILogin } from 'src/interfaces/app.int
 import { IMemberDocument } from 'src/interfaces/member.interface';
 import { generate, verify } from 'password-hash';
 import { JwtAuthenService } from './jwt-authen.service';
+import { DbAuthenService } from './db-authen.service';
 
 @Injectable()
 export class AccountService {
   constructor(
-    private authenService: JwtAuthenService,
+    private authenService: DbAuthenService,
     @InjectModel('Member') private memberModel: Model<IMemberDocument>
     ){
   }

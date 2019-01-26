@@ -5,9 +5,10 @@ import { AccountService } from './services/account.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MemberSchema } from './schemas/member.schema';
 import { AccountController } from './controllers/account.controller';
-import { DbAuthenService } from './services/db-authen.service';
+import { DbAuthenService, DbAuthenStrategy } from './services/db-authen.service';
 import { accessTokenSchema } from './schemas/access-token.schema';
 import { JwtAuthenService } from './services/jwt-authen.service';
+import { MemberController } from './controllers/member.controller';
 
 @Module({
   imports: [
@@ -19,8 +20,15 @@ import { JwtAuthenService } from './services/jwt-authen.service';
   ],
   controllers: [
     AppController, 
-    AccountController
+    AccountController,
+    MemberController
   ],
-  providers: [AppService, AccountService, DbAuthenService, JwtAuthenService],
+  providers: [
+     AppService,
+     AccountService, 
+     DbAuthenService, 
+     DbAuthenStrategy,
+     JwtAuthenService
+    ],
 })
 export class AppModule {}
