@@ -5,6 +5,7 @@ import { IAccount } from "src/interfaces/app.interface";
 import { ProfileModel } from "src/models/profile.model";
 import { ValidationPipe } from "src/pipes/validation.pipe";
 import { MemberService } from "src/services/member.service";
+import { IMemberDocument } from "src/interfaces/member.interface";
 
 @Controller('api/member')
 @UseGuards(AuthGuard('jwt'))
@@ -19,7 +20,8 @@ export class MemberController {
      */
     @Get('data')
     getProfile(@Req() req: Request){
-        const user: IAccount =  req.user as any;    
+        const user: IMemberDocument =  req.user as any;
+        user.image = user.image ? 'http://localhost:3000' + user.image: '';    
         return user;
     }
 
